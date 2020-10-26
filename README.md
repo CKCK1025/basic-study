@@ -1,2 +1,2 @@
-# testMyApp
-项目描述
+# basic-study
+基础学习

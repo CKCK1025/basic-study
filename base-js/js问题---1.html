@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style lang="text/css">
+    .div1{
+        width: 100px;
+        height: 100px;
+        display: none;
+    }
+    .div2{
+        width: 100px;
+        height: 100px;
+        background-color: aqua;
+        display: block;
+    }
+    .div3{
+        width: 100px;
+        height: 100px;
+        visibility: hidden;
+    }
+    .div4{
+        width: 100px;
+        height: 100px;
+        background-color: aqua;
+        visibility: visible;
+    }
+
+    .div5{
+        background-color: beige;
+        border: 1px solid #777;
+        margin-top: 50px;
+    }
+    .left{
+        float: left;
+        width: 20%;
+        height: 20px;
+        background-color: #00ffff;
+    }
+    .right{
+        float: right;
+        width: 30%;
+        height: 40px;
+        background-color: #00ffff;
+    }
+    .div6{
+        clear: both;
+    }
+    .div7{
+        background-color: beige;
+        border: 1px solid red;
+        margin-top: 10px;
+        height: 20px;
+    }
+</style>
+<body>
+    <div class="div1">
+        <div class="div2"></div>
+    </div>
+    <div class="div3">
+        <div class="div4"></div>
+    </div>
+
+    <div class="div5">
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="div6"></div>
+    </div>
+    <div class="div7"></div>
+</body>
+<script>
+/*
+1. display: none;与visibility: hidden;的区别
+联系：它们都能让元素不可见
+区别：
+    1) display:none;会让元素完全从渲染树中消失，渲染的时候不占据任何空间；visibility: hidden;
+    不会让元素从渲染树消失，渲染师元素继续占据空间，只是内容不可见
+    2) display: none;是非继承属性，子孙节点消失由于元素从渲染树消失造成，通过修改子孙节点属性无
+    法显示；visibility: hidden;是继承属性，子孙节点消失由于继承了hidden，通过设置visibility: 
+    visible;可以让子孙节点显式
+    3) 修改常规流中元素的display通常会造成文档重排。修改visibility属性只会造成本元素的重绘。
+    4) 读屏器不会读取display: none;元素内容；会读取visibility: hidden;元素内容
+
+
+2. link与@import的区别   (综合link优于@import)
+    1) link是HTML方式， @import是CSS方式
+    2) link最大限度支持并行下载，@import过多嵌套导致串行下载，出现FOUC(文档样式短暂失效)
+    3) link可以通过rel="alternate stylesheet"指定候选样式
+    4) @import必须在样式规则之前，可以在css文件中引用其他文件,
+
+
+3. 什么是FOUC?如何避免
+Flash Of Unstyled Content: 用户定义样式表加载之前浏览器使用默认样式显示文档,用户样式加载
+渲染之后再重新显示文档，造成页面闪烁
+解决办法： 把样式表放到文档的<head>
+
+
+4. 如何创建块级格式化上下文(block formatting context),BFC有什么用
+BFC (block formatting context)，块级格式化上下文，是一个独立的渲染区域，让处于 BFC 内部
+的元素与外部的元素相互隔离，使内外元素的定位不会相互影响
+触发条件：（以下任意一条）
+    *float的值不为none
+    *overflow的值不为visible
+    *display的值为table-cell、tabble-caption和inline-block之一
+    *position的值不为static或者releative中的任何一个 
+    （在IE下, Layout,可通过zoom:1 触发）
+
+BFC布局与普通文档流布局区别    https://www.xiaohuochai.cc/posts/5af76dabd749173d1452b7f6
+    普通文档流布局:
+        1）浮动的元素是不会被父级计算高度
+        2）非浮动元素会覆盖浮动元素的位置
+        3）margin会传递给父级元素
+        4）两个相邻元素上下的margin会重叠
+
+    BFC布局规则:
+        1）浮动的元素会被父级计算高度(父级元素触发了BFC)
+        2）非浮动元素不会覆盖浮动元素的位置(非浮动元素触发了BFC)
+        3）margin不会传递给父级(父级触发BFC)
+        4）属于同一个BFC的两个相邻元素上下margin会重叠（一个bfc下，一个在bfc外，连个margin不重叠）
+           开发中的应用：
+        1）阻止margin重叠
+        2）可以包含浮动元素 —— 清除内部浮动(清除浮动的原理是两个 div都位于同一个 BFC 区域之中)
+        3）自适应两栏布局
+        4）可以阻止元素被浮动元素覆盖
+
+
+5. display、float、position的关系
+    1）如果display取值为none，那么position和float都不起作用，这种情况下元素不产生框 
+    2）否则（display非none），如果一个元素的position属性被设置为absolute或者fixed（都是绝对定
+       位），这种情况下，float被忽略（float计算的值为none），display属性的值根据下表自动计算。box
+       的位置取决于属性top，right，bottom，left以及box的容器
+    3）否则（display非none，并且position非absolute、fixed），如果float的值不为null（为left或者
+       right），那么box是浮动的并且display的值根据下表来计算
+    4）否则（display非none，并且position非absolute、fixed，float为none），如果元素是根元素，
+       display的值根据下表来计算。
+    5）否则（display非none，并且position非absolute、fixed，float为none，不是根元素），那么就
+       按照被指定的display的属性值来显示。
+
+
+6.清除浮动的几种方式，各自优缺点
+    1）使用空标签清除浮动clear:both。
+
+
+
+
+
+
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+<script>
+    window.onload = (event) => {
+            console.log('page is fully loaded====');
+        };
+    document.addEventListener('DOMContentLoaded',function(){
+        console.log('===3 seconds passed');
+    });
+    window.addEventListener('load', (event) => {
+            console.log('page is fully loaded');
+        });
+
+    // index.js
+    if (navigator.serviceWorker) {
+    navigator.serviceWorker
+        .register("sw.js")
+        .then(function(registration) {
+        console.log("service worker 注册成功");
+        })
+        .catch(function(err) {
+        console.log("servcie worker 注册失败");
+        });
+    }
+/*
+1.cookie和localSrorage、session、indexDB 的区别
+    1)cookie:一般由服务器生成，可以设置过期时间;内存大小4k,每次都会携带在 header 中，对于请求性能影响；
+    2）localStorage:除非被清理，否则一直存在,5M, 不参与服务端通信；
+    3) sessionStorage:页面关闭会被清理，否则一直存在,5M, 不参与服务端通信；
+    4) indexDB:除非被清理，否则一直存在, 无限内存，不参与服务端通信；
+
+    cookie 已经不建议用于存储。如果没有大量数据存储需求的话，可以使用 localStorage和 sessionStorage 。对于
+    不怎么改变的数据尽量使用 localStorage 存储，否则可以用 sessionStorage 存储。
+
+    cookie: 属性value值如果用于保存用户登录态，应该将该值加密，不能使用明文的用户标识；属性http-only，不能通过 JS访问
+     Cookie，减少 XSS攻击;属性secure，只能在协议为 HTTPS 的请求中携带；属性same-site，规定浏览器不能在跨域请求中携带
+     Cookie，减少 CSRF 攻击。
+
+2. 怎么判断页面是否加载完成？
+    1）Load 事件触发代表页面中的 DOM，CSS，JS，图片已经全部加载完毕。
+        window.addEventListener('load', (event) => {
+            console.log('page is fully loaded');
+        });
+        window.onload = (event) => {
+            console.log('page is fully loaded');
+        };
+    2）DOMContentLoaded 事件触发代表初始的 HTML 被完全加载和解析，不需要等待 CSS，JS，图片加载
+    
+3. 什么是事件代理
+    如果一个节点中的子节点是动态生成的，那么子节点需要注册事件的话应该注册在父节点上
+    事件代理的方式相对于直接给目标注册事件来说，有以下优点：
+        节省内存
+        不需要给子节点注销事件
+
+
+4. service worker
+    service workers 本质上充当Web应用程序与浏览器之间的代理服务器，也可以在网络可用时作为浏览器和网络间的代理。
+    目前该技术通常用来做缓存文件，提高首屏速度，可以试着来实现这个功能
+
+
+5，浏览器性能问题
+重绘和回流：
+    1）重绘和回流是渲染步骤中的一小节，但是这两个步骤对于性能影响很大。
+    2）重绘是当节点需要更改外观而不会影响布局的，比如改变 color就叫称为重绘
+    3）回流是布局或者几何属性需要改变就称为回流。
+    4）回流必定会发生重绘，重绘不一定会引发回流。回流所需的成本比重绘高的多，
+        改变深层次的节点很可能导致父节点的一系列回流。
+    
+以下几个动作可能会导致性能问题：
+    改变 window 大小，改变字体，添加或删除样式，文字改变，定位或者浮动，盒模型。
+
+
+重绘和回流其实和 Event loop 有关，减少重绘和回流
+    1）使用 translate替代top，使用visibility替换display:none，因为前者只会引起重绘，后者会引发回流（改变了布局）
+    2）不要把 DOM结点的属性值放在一个循环里当成循环里的变量
+    3）CSS选择符从右往左匹配查找，避免 DOM 深度过深
+    4）将频繁运行的动画变为图层，图层能够阻止该节点回流影响别的元素。比如对于 video 标签，浏览器会自动将该节点变为图层。
+    5）不要使用 table 布局，可能很小的一个小改动会造成整个 table 的重新布局 动画实现的速度的选择，动画速度越快，
+        回流次数越多，也可以选择使用 requestAnimationFrame
+
+*/
+
+</script>

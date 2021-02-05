@@ -50,6 +50,7 @@
     .div6{
         clear: both;
     }
+    /* .div5:after{content:""; display: block; clear: both;}   父级div定义伪类:after和zoom*/ 
     .div7{
         background-color: beige;
         border: 1px solid red;
@@ -142,8 +143,9 @@ BFC布局与普通文档流布局区别    https://www.xiaohuochai.cc/posts/5af7
 
 
 6.清除浮动的几种方式，各自优缺点
-    1）使用空标签清除浮动clear:both。
-
+    1）使用空标签清除浮动clear:both。（含伪元素方法）    
+    2）父级div定义overflow:hidden,父级div定义overflow:auto(可能出现滚动条)
+    3）父级div定义伪类:after和zoom
 
 
 

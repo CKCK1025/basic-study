@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js练习题---1</title>
+</head>
+<style lang="text/css">
+    .div1{
+        height: 200px;
+        width: 200px;
+        background-color: burlywood;
+        color: #fff;
+        cursor: pointer;
+    }
+    .div2{
+        height: 200px;
+        width: 200px;
+        margin-top: 10px;
+        background-color: #565656;
+        color: #fff;
+        cursor: pointer;
+    }
+</style>
+<body>
+    <div class="div1" onclick="fun2()">防抖</div>
+    <div class="div2" onclick="fun4()">节流</div>
+</body>
+<script>
+
+/*
+1. ['1', '2', '3'].map(parseInt) what & why ?
+    1)parseInt,  const intValue = parseInt(string[, radix]);
+        参数：  string: 要被解析的值。
+                radix：一个介于2和36之间的整数(数学系统的基础)，表示上述字符
+                        串的基数。默认为10。 返回值 返回一个整数或NaN
+    2)map() 方法创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果。
+        var new_array = arr.map(function callback(currentValue[,index[, array]]) {
+            // Return element for new_array
+        }[, thisArg])
+        参数：currentValue 是callback 数组中正在处理的当前元素。 
+            index可选, 是callback 数组中正在处理的当前元素的索引。
+            array可选, 是callback map 方法被调用的数组。        
+            还有thisArg可选, 执行 callback 函数时使用的this 值。
+
+        结果：[1, NaN, NaN]
+
+*/
+
+function debounce(func, time) {   // 防抖  
+    let timer = null;
+    return () => {
+      clearTimeout(timer);
+      timer = setTimeout(()=> {
+        func.apply(this, arguments)
+      }, time);
+    }
+  }
+
+  function throtte(func, time){  //节流  
+    let activeTime = 0;
+    return () => {
+      const current = Date.now();
+      if(current - activeTime > time) {
+        func.apply(this, arguments);
+        activeTime = Date.now();
+      }
+    }
+  }
+  function fun1() {
+      console.log(3333);
+  }
+  let fun2 = debounce(fun1, 2000) //2秒内只触发一次。
+  
+  function fun3() {
+      console.log(4444);
+  }
+  let fun4 = throtte(fun3, 2000)   //每次触发间隔大于2秒，才能成功触发。
+  
+
+/*===========================================================================
+2.什么是防抖和节流？有什么区别？如何实现？
+    1)防抖：在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。
+    2)节流：规定在一个单位时间内，只能触发一次函数。如果这个单位时间内触发多次函数，只有一次生效。
+
+*/
+
+
+// 去重数组的重复对象
+let arr = [1, 2, 3, 2, 1, 1]
+console.log([... new Set(arr)]);	// [1, 2, 3]
+
+let set = new Set();
+let a = NaN;
+let c = undefined;
+let d = undefined;
+let b = NaN;
+set.add(a);
+set.add(b);
+set.add(d);     
+set.add(c);
+console.log(c === d, a===b);
+console.log(set, set.constructor, set.size);// Set {NaN}
+
+let set1 = new Set()
+set1.add(1).add(2).add(1)
+console.log(set1);
+console.log(set1.has(1),set1.has(3));
+set1.delete(1)	
+console.log(set1.has(1), set1);
+
+const arr1 = [[1, 2], [3, 4]]
+const weakset = new WeakSet(arr1)
+console.log('weakset====', weakset)
+
+/*===========================================================================
+https://www.muyiy.cn/question/js/4.html
+3.介绍下 Set、Map、WeakSet 和 WeakMap 的区别？
+    Set 和 Map 主要的应用场景在于 数据重组 和 数据储存
+    Set 是集合的数据结构，Map是字典的数据结构。
+    1） 集合 Set
+        es6新增数据结构，集合。类似数组，是唯一且无序的，无重复的值。
+        Set 对象允许你储存任何类型的唯一值，无论是原始值或者是对象引用。
+        Set 内部判断两个值是否不同,采用自有算法，类似“===”，不同在于：NaN,会被判断为相同
+        Set 实例属性包含，constructor(构造函数),size(数组是length);    
+        Set 实例方法：
+            1>操作类： add(),delete(),has(),clear();
+            2>遍历类：keys(),values(),entries(),forEach(callbackFn, thisArg)
+            3>Set可以使用 map、filter 方法
+    2) WeakSet  对象允许你将弱引用对象储存在一个集合中
+        weakSet 只能存储对象引用，不能存储对象值，Set集合都可以。
+        weakset 无法遍历，储存的对象值都是被弱引用的，即垃圾回收机制不考虑WeakSet对该对象的应用
+            可以用来保存DOM节点，不容易造成内存泄漏
+    3) 字典Map,
+        任何具有Iterator接口、且每个成员都是一个双元素的数组的数据结构都可以当作Map构造函数的参数
+        与集合区别：
+        1>共同点：集合、字典 可以储存不重复的值
+        2>不同：集合 是以 [value, value]的形式储存元素，字典 是以 [key, value] 的形式储存
+        与其他数据结构转换
+    4）weakMap 对象是一组键值对的集合，其中的键是弱引用对象，而值可以是任意。
+        WeakMap 弱引用的只是键名，而不是键值。键值依然是正常引用。
+
+*/
+// Map 与 Array 转换
+const map = new Map([[1, 1], [2, 2], [3, 3]])
+console.log([...map])	// [[1, 1], [2, 2], [3, 3]]
+const map = new Map([[1, 1], [2, 2], [3, 3]])
+console.log(map)	// Map {1 => 1, 2 => 2, 3 => 3}
+
+// Map 与 Object转换
+function mapToObj(map) {
+    let obj = Object.create(null)
+    for (let [key, value] of map) {
+        obj[key] = value
+    }
+    return obj
+}
+const map = new Map().set('name', 'An').set('des', 'JS')
+mapToObj(map)  // {name: "An", des: "JS"}；
+
+function objToMap(obj) {
+    let map = new Map()
+    for (let key of Object.keys(obj)) {
+        map.set(key, obj[key])
+    }
+    return map
+}
+objToMap({'name': 'An', 'des': 'JS'}) // Map {"name" => "An", "des" => "JS"}
+
+// Map 与 JSON
+function mapToJson(map) {
+    return JSON.stringify([...map])
+}
+let map = new Map().set('name', 'An').set('des', 'JS')
+mapToJson(map)	// [["name","An"],["des","JS"]]
+
+function jsonToStrMap(jsonStr) {
+  return objToMap(JSON.parse(jsonStr));
+}
+jsonToStrMap('{"name": "An", "des": "JS"}') // Map {"name" => "An", "des" => "JS"}
+
+
+
+
+
+
+
+
+</script>
+</html>

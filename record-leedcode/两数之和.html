@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>两数之和</title>
+</head>
+<style lang="text/css">
+</style>
+<body>
+</body>
+<script>
+var twoSum = function(nums, target) {
+    var arr = []
+    for(let i=0; i< nums.length; i+=1){
+        arr.push(nums[i])
+    }
+    arr.sort((v1,v2)=>{return v1-v2})
+    for(let i=0; i< arr.length; i+=1){
+        let flag = true; 
+        for(let j=1 + i; j< arr.length && flag; j+=1) {
+            if(arr[i] + arr[j] > target) {
+                flag = false;
+            }
+            if(arr[i] + arr[j] == target) {
+                let x=-1,y=-1;
+                for(let k=0; k< nums.length; k+=1){
+                    if(nums[k] == arr[i] && x == -1) {
+                        x = k;
+                    }
+                    if(nums[k] == arr[j]&& y == -1 && k != x) {
+                        y = k;
+                    }
+                }
+                return[x, y]
+            }
+        }
+    }
+    return []; 
+};
+
+//哈希Map表
+var twoSum = function(nums, target) {
+    let map = new Map()
+    for(let i=0; i< nums.length; i+=1){
+        map.set(nums[i], i);
+    }
+    for(let i=0; i< nums.length; i+=1){
+        if(map.has(target - nums[i]) && map.get(target - nums[i]) != i) {  //twoSum([3,3], 6)    twoSum([3,2,4], 6) 防止返回相同数
+            return [i, map.get(target - nums[i])]
+        }
+    }
+    return []; 
+};
+</script>
+</html>

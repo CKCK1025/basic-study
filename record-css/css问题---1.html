@@ -87,6 +87,7 @@
     4) 读屏器不会读取display: none;元素内容；会读取visibility: hidden;元素内容
 
 
+
 2. link与@import的区别   (综合link优于@import)
     1) link是HTML方式， @import是CSS方式
     2) link最大限度支持并行下载，@import过多嵌套导致串行下载，出现FOUC(文档样式短暂失效)
@@ -94,10 +95,12 @@
     4) @import必须在样式规则之前，可以在css文件中引用其他文件,
 
 
+
 3. 什么是FOUC?如何避免
 Flash Of Unstyled Content: 用户定义样式表加载之前浏览器使用默认样式显示文档,用户样式加载
 渲染之后再重新显示文档，造成页面闪烁
 解决办法： 把样式表放到文档的<head>
+
 
 
 4. 如何创建块级格式化上下文(block formatting context),BFC有什么用
@@ -129,6 +132,8 @@ BFC布局与普通文档流布局区别    https://www.xiaohuochai.cc/posts/5af7
         4）可以阻止元素被浮动元素覆盖
 
 
+
+
 5. display、float、position的关系
     1）如果display取值为none，那么position和float都不起作用，这种情况下元素不产生框 
     2）否则（display非none），如果一个元素的position属性被设置为absolute或者fixed（都是绝对定
@@ -142,18 +147,12 @@ BFC布局与普通文档流布局区别    https://www.xiaohuochai.cc/posts/5af7
        按照被指定的display的属性值来显示。
 
 
+       
+
 6.清除浮动的几种方式，各自优缺点
     1）使用空标签清除浮动clear:both。（含伪元素方法）    
     2）父级div定义overflow:hidden,父级div定义overflow:auto(可能出现滚动条)
     3）父级div定义伪类:after和zoom
-
-
-
-
-
-
-
-
 
 */
 

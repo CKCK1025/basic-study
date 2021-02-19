@@ -11,7 +11,7 @@
 
 
 
-2.关于setState https://www.kancloud.cn/freya001/haoke/1692029
+2.关于setState          https://www.kancloud.cn/freya001/haoke/1692029
     1）由React控制的事件处理程序，以及生命周期函数调用setState不会同步更新state 。 React控制之外的事件
         中调用setState是同步更新的。比如原生js绑定的事件，setTimeout/setInterval等。
     2）当需要拿到更新状态后的值，组件类中可通过this.setState的第二参数、componentDidMount、
@@ -48,7 +48,6 @@
                 console.log(count); // 0
                 });
             };
-
 
 
 3.

@@ -11,60 +11,9 @@
     
 </body>
 <script>
-// b() // call b
-// console.log(a) // undefined
-// var a = 'Hello world'
-// console.log(a) //Hello world
-// function b() {
-//     console.log('call b')
-// }
-
-
-// b() // call b second
-// function b() {
-//     console.log('call b fist')
-// }
-// function b() {
-//     console.log('call b second')
-// }
-// var b = 'Hello world'
-
-
-// var tmp = new Date();
-// function f() {
-//   console.log(tmp);
-//   if (false) {
-//     var tmp = 'hello world';
-//   }
-// }
-// f(); // undefined
-
 var s = 'hello';
-
-
 /*===========================================================================
-1.谈谈变量提升
-    1)当执行JS代码时，会生成执行环境，只要代码不是写在函数中的，就是在全局执行环境中，函数
-    中的代码会产生函数执行环境，只此两种执行环境。
-
-    2)因为函数和变量提升的原因,在生成执行环境时，会有两个阶段.
-        第一个阶段是创建的阶段，JS 解释器会找出需要提升的变量和函数，并且给他们提前在内存中
-        开辟好空间，函数的话会将整个函数存入内存中，变量只声明并且赋值为 undefined
-
-        第二个阶段，也就是代码执行阶段，我们可以直接提前使用。
-
-
-    3)在提升的过程中，相同的函数会覆盖上一个函数，并且函数优先于变量提升
-
-    4)var 会产生很多错误，所以在 ES6中引入了 let。let不能在声明前使用，但是这并不是常说的
-    let 不会提升，let提升了，在第一阶段内存也已经为他开辟好了空间，但是因为这个声明的特
-    性导致了并不能在声明前使用
- 
-*/
-
-
-/*===========================================================================
-2.谈一谈let与var的区别
+1.谈一谈let与var的区别
     1) let命令不存在变量提升，如果在let前使用变量，会导致报错
     2) 如果块区中存在let和const命令，就会形成封闭作用域
     3）不允许重复声明，因此，不能在函数内部重新声明参数
@@ -79,8 +28,12 @@ var s = 'hello';
 // }
 
 
+
+
+
+
 /*===========================================================================
-3.map和forEach区别
+2.map和forEach区别
     1）forEach方法，是最基本的方法，就是遍历与循环，默认有3个传参：分别是遍历的数组内容item、
     数组索引index、和当前遍历数组Array
     2）map方法，基本用法与forEach一致，但是不同的，它会返回一个新的数组，所以在callback需要
@@ -98,16 +51,27 @@ function getValue(name, age) {
 }
 getValue.call(a, 'yck', '24')
 getValue.apply(a, ['yck', '24'])
+
+
+
+
+
 /*===========================================================================
-4.bind、call、apply 区别
+3.bind、call、apply 区别
     1) call 和 apply 都是为了解决改变 this 的指向。作用都是相同的，只是传参的方式不同。
     2) 除了第一个参数外，call 可以接收一个参数列表，apply 只接受一个参数数组
     3)bind 和其他两个方法作用也是一致的，只是该方法会返回一个函数。并且我们可以通过
 	 bind 实现柯里化
 */
 
+
+
+
+
+
+
 /*===========================================================================
-5.如何实现bind,call,apply
+4.如何实现bind,call,apply
 */
 Function.prototype.myBind = function (context) {
   if (typeof this !== 'function') {
@@ -125,7 +89,6 @@ Function.prototype.myBind = function (context) {
   }
 }
 
-
 Function.prototype.myCall = function (context) {
   var context = context || window
   // 给 context 添加一个属性
@@ -139,8 +102,6 @@ Function.prototype.myCall = function (context) {
   delete context.fn
   return result
 }
-
-
 
 Function.prototype.myApply = function (context) {
   var context = context || window
@@ -159,8 +120,15 @@ Function.prototype.myApply = function (context) {
   return result
 }
 
+
+
+
+
+
+
+
 /*===========================================================================
-6. async、await 优缺点
+5. async、await 优缺点
 async 和 await 相比直接使用 Promise 来说，优势在于处理 then 的调用链，能够更清晰准
 确的写出代码。缺点在于滥用 await 可能会导致性能问题，因为 await 会阻塞代码，也许之后
 的异步代码并不依赖于前者，但仍然需要等待前者完成，导致代码失去了并发性

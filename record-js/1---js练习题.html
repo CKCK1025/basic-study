@@ -48,6 +48,16 @@
 
 */
 
+
+  
+
+/*===========================================================================
+2.什么是防抖和节流？有什么区别？如何实现？
+    1)防抖：在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。
+    2)节流：规定在一个单位时间内，只能触发一次函数。如果这个单位时间内触发多次函数，只有一次生效。
+
+*/
+
 function debounce(func, time) {   // 防抖  
     let timer = null;
     return () => {
@@ -77,42 +87,8 @@ function debounce(func, time) {   // 防抖
       console.log(4444);
   }
   let fun4 = throtte(fun3, 2000)   //每次触发间隔大于2秒，才能成功触发。
-  
-
-/*===========================================================================
-2.什么是防抖和节流？有什么区别？如何实现？
-    1)防抖：在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。
-    2)节流：规定在一个单位时间内，只能触发一次函数。如果这个单位时间内触发多次函数，只有一次生效。
-
-*/
 
 
-// 去重数组的重复对象
-let arr = [1, 2, 3, 2, 1, 1]
-console.log([... new Set(arr)]);	// [1, 2, 3]
-
-let set = new Set();
-let a = NaN;
-let c = undefined;
-let d = undefined;
-let b = NaN;
-set.add(a);
-set.add(b);
-set.add(d);     
-set.add(c);
-console.log(c === d, a===b);
-console.log(set, set.constructor, set.size);// Set {NaN}
-
-let set1 = new Set()
-set1.add(1).add(2).add(1)
-console.log(set1);
-console.log(set1.has(1),set1.has(3));
-set1.delete(1)	
-console.log(set1.has(1), set1);
-
-const arr1 = [[1, 2], [3, 4]]
-const weakset = new WeakSet(arr1)
-console.log('weakset====', weakset)
 
 /*===========================================================================
 https://www.muyiy.cn/question/js/4.html
@@ -142,6 +118,34 @@ https://www.muyiy.cn/question/js/4.html
         WeakMap 弱引用的只是键名，而不是键值。键值依然是正常引用。
 
 */
+// 去重数组的重复对象
+let arr = [1, 2, 3, 2, 1, 1]
+console.log([... new Set(arr)]);	// [1, 2, 3]
+
+let set = new Set();
+let a = NaN;
+let c = undefined;
+let d = undefined;
+let b = NaN;
+set.add(a);
+set.add(b);
+set.add(d);     
+set.add(c);
+console.log(c === d, a===b);
+console.log(set, set.constructor, set.size);// Set {NaN}
+
+let set1 = new Set()
+set1.add(1).add(2).add(1)
+console.log(set1);
+console.log(set1.has(1),set1.has(3));
+set1.delete(1)	
+console.log(set1.has(1), set1);
+
+const arr1 = [[1, 2], [3, 4]]
+const weakset = new WeakSet(arr1)
+console.log('weakset====', weakset)
+
+
 // Map 与 Array 转换
 const map = new Map([[1, 1], [2, 2], [3, 3]])
 console.log([...map])	// [[1, 1], [2, 2], [3, 3]]

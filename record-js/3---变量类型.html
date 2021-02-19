@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js问题---3</title>
+</head>
+<style lang="text/css"></style>
+<body>
+    
+</body>
+<script>
+/*===========================================================================
+1.1.JavaScript规定了几种语言类型
+    1）基本数据类型：number,string,boolean,null,undefined，(新增symbol(ES6)) 
+    2）对象类型：Object，（引用类型，还包括 Function 、Array、RegExp、Date 等等。）
+    3）typeof 可以区分前面四个基本数据类型，对应：number,string,boolean,object,undefined
+
+    区别：
+        1、声明变量时内存分配不同
+            原始类型：在栈中，空间固定，存于较小的内存栈中，便于迅速查询。
+            引用类型：存在堆中，栈中存储的变量，只是用来查找堆中的引用地址。
+            （引用值大小改变，放栈中会降低，但栈中可以存放引用类型得在堆中的地址，因为引用地址大小固定）
+        2、不同的内存分配带来不同的访问机制
+            js不允许直接访问堆内存中的对象，需要先访问对象在栈内存中的地址，通过地址获取堆中的对象值，
+            即引用访问。而基础数据类型可以直接访问。
+        3、复制变量不同
+            原始类型：原始值变量复制给另一个变量，会把原始值副本给新变量，两个变量独立，只是拥有相同值。
+            引用类型：复制的是引用地址，新旧两个变量指向同一个对象，有关联，一个改变，另一个也跟着改变。
+        4、传递参数的不同（内存分配的差别）（把实参复制给形参的过程）
+            原始类型：变量的值传给参数，之后参数值与变量独立，不影响。
+            引用类型：参数是传递的引用对象的地址，参数关联对象，类似（复制情景）
+
+    数据类型： 
+    1）undefined：声明的变量但没有初始化时，该变量的值就是undefined
+    2)null值表示一个空对象指针，一个特殊的值，常来描述“空值”
+        null和undefined往往可以互换，相等运算符“==”是true,
+    3)number  特殊数据类型NaN,布尔值是false,NaN与自己不相等。
+
+*/
+var a;
+console.log(a == undefined,undefined==undefined);  //true true    a声明了但未定义
+console.log(typeof b);    //undefined    b未声明
+console.log(typeof a);   //undefined    
+Boolean(undefined)   //false
+Number(undefined)   //NaN
+String(undefined)   //'undefined'
+// console.log(b == undefiend);   //报错  b is not defined
+// let b
+
+console.log(null == undefined);//true
+Boolean(null)       //false
+Number(null)       //0
+String(null) 　　  //'null'
+console.log(typeof null);//'object'
+console.log(null === null);//true
+console.log(undefined === null);//false
+console.log('null' === null);//false
+
+
+console.log('iii' == true, 'iii' === true, '' == true, '' === true);//false false false false
+console.log(1 == true, 1 === true, 0 == true, 0 === true); //true false false false   注意1==true是true
+
+console.log(NaN == NaN, NaN === NaN);//false false
+console.log(isNaN(NaN), isNaN(10), isNaN('10'));//true  false  false
+console.log(isNaN('ooo'), isNaN(true));//true   false   //不能转化为数值就是true
+
+/*===========================================================================
+1.2.谈谈变量提升
+    1)当执行JS代码时，会生成执行环境，只要代码不是写在函数中的，就是在全局执行环境中，函数
+    中的代码会产生函数执行环境，只此两种执行环境。
+
+    2)因为函数和变量提升的原因,在生成执行环境时，会有两个阶段.
+        第一个阶段是创建的阶段，JS 解释器会找出需要提升的变量和函数，并且给他们提前在内存中
+        开辟好空间，函数的话会将整个函数存入内存中，变量只声明并且赋值为 undefined
+
+        第二个阶段，也就是代码执行阶段，我们可以直接提前使用。
+
+
+    3)在提升的过程中，相同的函数会覆盖上一个函数，并且函数优先于变量提升
+
+    4)var 会产生很多错误，所以在 ES6中引入了 let。let不能在声明前使用，但是这并不是常说的
+    let 不会提升，let提升了，在第一阶段内存也已经为他开辟好了空间，但是因为这个声明的特
+    性导致了并不能在声明前使用
+ 
+*/
+// b() // call b
+// console.log(a) // undefined
+// var a = 'Hello world'
+// console.log(a) //Hello world
+// function b() {
+//     console.log('call b')
+// }
+
+
+// b() // call b second
+// function b() {
+//     console.log('call b fist')
+// }
+// function b() {
+//     console.log('call b second')
+// }
+// var b = 'Hello world'
+
+
+// var tmp = new Date();
+// function f() {
+//   console.log(tmp);
+//   if (false) {
+//     var tmp = 'hello world';
+//   }
+// }
+// f(); // undefined
+
+
+
+/*===========================================================================
+2.关于原型链
+    1）原型：在JavaScript中原型是一个prototype对象，用于表示类型之间的关系。
+    2）原型链：js中对象和对象之间存在关系，对象的继承关系，在js中是通过prototype对象指向父类
+        对象，直到指向object对象为止，这样形成的原型指向链条就是原型链。
+    3）当试图得到一个对象的某个属性时，如果这个对象本身没有这个属性，那么会去它的 __proto__
+    （即它的构造函数的prototype）中寻找。如果一直找到最上层都没有找到，那么就宣告失败，返回
+    undefined。
+    4)每个对象都有__proto__属性，此属性指向该对象的构造函数的原型。
+
+*/
+console.log('=======================================================================');
+var Person = function() {
+    this.age = 18;
+    this.name = 'nihao'
+}
+var Student = function(){}
+Student.prototype = new Person()
+var s1 = new Student();
+console.log(s1, s1.name, s1.age, s1.sex); //
+
+
+
+
+
+/*===========================================================================
+3.数据类型判断，以及各自优缺点。
+    1）typeof  是一个操作符，其右侧跟一个一元表达式，并返回这个表达式的数据类型。
+        包括7 种：number、boolean、symbol、string、object、undefined、function 等
+        注意：1> 对于基本类型，除 null 以外，均可以返回正确的结果。
+            2>对于引用类型，除 function 以外，一律返回 object 类型。
+            3>对于 null ，返回 object 类型。
+            4>对于 function 返回 function 类型。
+        null 有属于自己的数据类型 Null ， 引用类型中的 数组、日期、正则 也都有属于自
+        己的具体类型，而 typeof 对于这些类型的处理，只返回了处于其原型链最顶端的 Object 类型
+    2)instanceof 是用来判断 A 是否为 B 的实例 (instanceof 检测的是原型)
+        instanceof 只能用来判断两个对象是否属于实例关系， 而不能判断一个对象实例具体属
+        于哪种类型。
+
+    3)construtor 当一个函数 F被定义时，JS引擎会为F添加 prototype 原型，然后再在 prototype
+        上添加一个 constructor 属性，并让其指向 F 的引用。
+        null 和 undefined 是无效的对象，因此是不会有 constructor 存在的，这两种类型的数据需
+        要通过其他方式来判断。
+         函数的 constructor 是不稳定的，这个主要体现在自定义对象上，当开发者重写 prototype 后，
+         原有的 constructor 引用会丢失，constructor 会默认为 Object
+    4)toString toString() 是 Object 的原型方法，调用该方法，默认返回当前对象的 [[Class]] 
+        Object.prototype.toString.call('')
+*/
+
+console.log('=======================================================================');
+console.log(typeof ''); // string 有效
+console.log(typeof 1); // number 有效
+console.log(typeof Symbol()); // symbol 有效
+console.log(typeof true); //boolean 有效
+console.log(typeof undefined); //undefined 有效
+console.log(typeof null); //object 无效
+console.log(typeof [] ); //object 无效
+console.log(typeof Function()); // function 有效
+console.log(typeof Date()); //string 
+console.log(typeof new Date()); //object 无效
+console.log(typeof new RegExp()); //object 无效
+
+//模拟 instanceof
+function myInstanceof(a,b) {
+    var L = a.__proto__;
+    var R = b.prototype;
+    if(L === R) {
+        // A的内部属性 __proto__ 指向 B 的原型对象
+        return true;
+    }else if (L != 'Object'){
+
+    }
+    return false;
+}
+console.log('myInstanceof==', myInstanceof([], Array)); // true;
+console.log('myInstanceof==', myInstanceof([], Object)); // true;
+console.log([] instanceof Array); //true
+console.log({} instanceof Object);//true
+console.log(new Date() instanceof Date);//true
+console.log(new RegExp() instanceof RegExp);//true
+// console.log(null instanceof Null);//报错
+// console.log(undefined instanceof undefined);//报错
+
+let Fn = function f(){}
+console.log(Fn.prototype);
+var f = new Fn();
+console.log(f.constructor == Fn);  //true
+
+Object.prototype.toString.call('') ;   // [object String]
+Object.prototype.toString.call(1) ;    // [object Number]
+Object.prototype.toString.call(true) ; // [object Boolean]
+Object.prototype.toString.call(Symbol()); //[object Symbol]
+Object.prototype.toString.call(undefined) ; // [object Undefined]
+Object.prototype.toString.call(null) ; // [object Null]
+Object.prototype.toString.call(new Function()) ; // [object Function]
+Object.prototype.toString.call(new Date()) ; // [object Date]
+Object.prototype.toString.call([]) ; // [object Array]
+Object.prototype.toString.call(new RegExp()) ; // [object RegExp]
+Object.prototype.toString.call(new Error()) ; // [object Error]
+Object.prototype.toString.call(document) ; // [object HTMLDocument]
+Object.prototype.toString.call(window) ; //[object global] window 是全局对象 global 的引用
+
+
+
+
+
+
+/*===========================================================================
+4.Symbol类型
+新加入的原始类型
+每个Symbol()返回的值是惟一的，一个symbol值能作为对象属性的标识符，是该数据类型仅有的目的。
+特性： 1）独一无二，symbol()创建的symbol可用字符串描述，相同字符串描述的symbol不相等。
+        创建两个相等的symbol,用Symbol.for(key)
+      2）原始类型，Symbol()不是构造函数,可用typeof运算符判断一个Symbol类型
+      3）不可枚举，symbol作为对象属性，不呢用for...in...枚举，需要专门用
+        Object.getOwnPropertySymbols()获取symbol属性
+应用场景：
+    1）利用不可枚举，模拟私有属性，控制变量枚举
+    2）防止属性污染，给对象添加属性，为了避免覆盖，用Symbol作为对象属性
+
+
+*/
+var sym1 = Symbol();  // Symbol() 
+var sym2 = Symbol('ConardLi');  // Symbol(ConardLi)
+var sym3 = Symbol('ConardLi');  // Symbol(ConardLi)
+var sym4 = Symbol({name:'ConardLi'}); // Symbol([object Object])
+console.log(sym2 === sym3);  // false
+
+var sym1 = Symbol.for('ConardLi'); 
+var sym2 = Symbol.for('ConardLi');
+//给定的key搜索现有的symbol，如果找到则返回该symbol。否则使用给定的key在全局symbol注册表中创建一个新的symbol。
+console.log(sym1 === sym2); // true
+
+// new Symbol(); // Uncaught TypeError: Symbol is not a constructor
+typeof Symbol() === 'symbol'
+typeof Symbol('ConardLi') === 'symbol'
+
+var obj = {
+  name:'ConardLi',
+  [Symbol('name2')]:'code秘密花园'
+}
+Object.getOwnPropertyNames(obj); // ["name"]
+Object.keys(obj); // ["name"]
+for (var i in obj) {
+   console.log(i); // name
+}
+Object.getOwnPropertySymbols(obj) // [Symbol(name2)]
+
+
+
+
+
+/*===========================================================================
+5. 关于Number类型
+    1） 精度丢失，js中0.1+0.2 != 0.3；数据都是二进制存储，计算时先转二进制计算再把结果赚十进制。
+    2） 小数的二进制大多数都是无限循环的，ES中的Number类型遵循IEEE 754标准。使用64位固定长度来表示。
+解决方案：
+    1）加减法可以用参数乘以1000再用结果除以1000,乘除法可以用参数分别*100进行计算后在除以10000
+    2）使用toFixed()方法，
+*/
+console.log(100.1 + 9.8); // 109.89999999999999
+console.log(100 * 9.8); //980.0000000000001
+console.log((100.1 * 1000 + 1000 * 9.8) / 1000); //109.9
+console.log(0.1 * 0.2); //0.020000000000000004
+console.log(((0.1*100) * (0.2 *100)) / 10000); //0.02
+var result = 100.1 + 9.8
+console.log(result.toFixed(2));//109.90
+
+
+
+
+
+/*===========================================================================
+6. 包装类型，拆箱装箱
+包装类型：
+    特殊的引用类型，Boolean,Number, String, 是基础类型的包装类型。
+    引用类型和包装类型的主要区别就是对象的生存期，使用new操作符创建的引用类型的实例，
+    在执行流离开当前作用域之前都一直保存在内存中，基础类型只存在执行一行代码一瞬间，
+    立刻被销毁，不能在运行时为基础类型添加属性。
+
+拆箱和装箱
+    装箱类型：把基本类型转换为对应的包装类型
+    拆箱操作：把引用类型转换为基本类型
+
+
+*/
+true === new Boolean(true); // false
+123 === new Number(123); // false
+'ConardLi' === new String('ConardLi'); // false
+console.log(typeof new String('ConardLi')); // object
+console.log(typeof 'ConardLi'); // string
+
+var name = 'ConardLi'
+// name.color = 'red';
+console.log(name.color); // undefined
+
+</script>
+</html>

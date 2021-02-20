@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>布局样式</title>
+</head>
+<style lang="text/css">
+html,body{
+    height:100%
+}
+body{
+    margin:0
+}
+/* .box{
+    position:relative;
+    background-color:lightblue;
+    min-height:100%;
+}
+.content{
+    padding-bottom:50px;
+}
+.sticky{
+    position:absolute;
+    background-color:lightgreen;
+    width:100%;
+    height:50px;
+    bottom:0;
+} */
+
+
+/* .box{
+    display:flex;
+    flex-flow:column;
+    min-height:100vh;
+    background-color:lightblue;
+}
+.content{
+    flex:1;
+}
+.sticky{
+    background-color:lightgreen;
+    height:50px;
+} */
+
+
+/* ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.list{
+    width: 200px;
+    height: 30px;
+    overflow: hidden;
+    border: 1px solid gray;
+    background-color: lightgreen;
+    line-height: 30px;
+    text-align: justify;
+}
+.in{
+    background-color: lightblue;
+    padding: 0 10px;
+    display:inline-block;
+}
+.list:after{
+    content:"";
+    width:100%;
+    display:inline-block;
+} */
+
+
+/* p{margin: 0;}
+.parent{overflow: hidden;zoom: 1;}
+.left{float: left;width: 100px;}    
+.right{margin-left: 120px;} */
+
+/* body,p{margin: 0;}
+.parentWrap{
+    overflow: hidden;
+}
+.parent{
+    margin-right: -20px;
+    overflow: hidden;
+}
+.child{
+    float: left;
+    height: 100px;
+    width: 25%;
+    padding-right: 20px;
+    box-sizing: border-box;
+    background-clip: content-box;
+} */
+
+
+body,p{margin: 0;}
+body,html,.parent{height: 100%;}
+.top,.bottom{
+    position: absolute;
+    height:50px;
+    left: 0;
+    right: 0;
+}
+.top{top: 0;}
+.bottom{bottom: 0;}
+.middleWrap{
+    height: 100%;
+    overflow: hidden;
+}
+.middle{
+    overflow: hidden;
+    height: 100%;
+    margin: 50px 0;
+}
+.left{
+    float: left;
+    width: 100px;
+    margin-right: 20px;
+    height: 100%;
+}
+.right{
+    overflow: auto;
+    height: 100%;
+}
+.right-in{
+    height: 1000px;
+}
+
+
+</style>
+<body>
+    <!-- <div class="box">
+        <main class="content">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quam eos architecto ratione culpa adipisci inventore ipsum eum esse, nam aperiam, non tempora perferendis doloribus cumque ducimus quidem consequuntur reprehenderit reiciendis!
+            ...
+        </main>
+        <footer class="sticky"></footer>
+    </div> -->
+    <!-- <ul class="list ">
+        <li class="in">内容</li>
+        <li class="in">样式</li>
+        <li class="in">行为</li>  
+        <li class="in">内容</li>
+        <li class="in">样式</li>
+        <li class="in">行为</li>  
+    </ul> -->
+    <!-- <div class="parent" style="background-color: lightgrey;">
+        <div class="left" style="background-color: lightblue;">
+            <p>left</p>
+        </div>
+        <div class="right"  style="background-color: lightgreen;">
+            <p>right</p>
+            <p>right</p>
+        </div>
+    </div> -->
+    <!-- <div class="parentWrap">
+        <div class="parent" style="background-color: lightgrey;">
+            <div class="child" style="background-color: lightblue;">1</div>
+            <div class="child" style="background-color: lightgreen;">2</div>
+            <div class="child" style="background-color: lightsalmon;">3</div>
+            <div class="child" style="background-color: pink;">4</div>                
+        </div>    
+    </div> -->
+    <div class="parent" id="parent" style="background-color: lightgrey;">
+            <div class="top" style="background-color: lightblue;">
+                <p>top</p>
+            </div>  
+            <div class="middleWrap">
+                <div class="middle" style="background-color: pink;">
+                    <div class="left" style="background-color: orange;">
+                        <p>left</p>
+                    </div>
+                    <div class="right" style="background-color: lightsalmon;">
+                        <div class="right-in">
+                            <p>right</p>
+                        </div>
+                    </div>
+                </div>        
+            </div> 
+            <div class="bottom" style="background-color: lightgreen;">
+                <p>bottom</p>
+            </div>        
+        </div>
+</body>
+<script>
+/*
+1.flex布局： https://www.cnblogs.com/qcloud1001/p/9848619.html
+    容器属性：flex-flow,flex-direction,flex-wrap,justify-content,align-items,align-content
+    元素属性：order,flex-grow,flex-shrink,flex-basis,flex,align-self
+    每个弹性容器都有两根轴：主轴和交叉轴，两轴之间成90度关系,弹性容器的两根轴非常重要，所有属性都是作用于轴
+
+    主轴方向---flex-direction: row,column(横向，纵向)，row-reverse，row-column(反)
+    沿主轴的排列处理(内容超出)---flex-wrap （是否拆行）
+    复合属性---flex-flow=flex-drection + flex-wrap    flex-flow:row nowrap;(横向，不拆行)
+
+不拆行，元素如何伸缩应对：
+    1. flex-shrink：缩小比例（容器宽度<元素总宽度时如何收缩）
+    2. flex-grow：放大比例（容器宽度>元素总宽度时如何伸展）
+
+元素对齐：
+    主轴上的对齐方式：justify-content  (stretch | flex-start | flex-end | center | space-between | space-around)
+    交叉轴上的对齐方式：align-items(多行使用align-content)
+    align-content管全局(所有行视为整体)
+
+弹性处理和刚性尺寸
+flex-basis设置的是元素在主轴上的初始尺寸
+复合属性
+flex = flex-grow + flex-shrink + flex-basis
+
+
+
+2.table布局：
+table来做整体页面的布局，布局技巧归纳如下：
+（1）按照设计图的尺寸设置表格的宽高以及单元格的宽高
+（2）将表格的border、cellpadding、cellspacing全部设置为0，表格的边框和间距就不占有页面空间，它只起到划分空间的作用。
+    表格的Cellpadding：设置表格中的单元格内容（如：文字等）离单元格边线的距离
+    表格的cellspacing：设置表格中单元格之间的间距
+（3）针对局部复杂的布局，可以在单元格里面再嵌套表格，嵌套表格划分局部的空间。
+（4）单元格中的元素或者嵌套的表格用align和valign设置对齐方式
+（5）通过属性或者CSS样式设置单元格中元素的样式
+（6）<table>表格<tr>行<td>列
+
+
+
+3,inline-block 和 float布局，横向排列（且定宽）用inline-block布局，文字环绕用float布局
+
+
+4.案例：
+水平垂直居中： https://www.xiaohuochai.cc/posts/5af80ed3d749173d1452b807
+    1）text-align + line-height实现单行文本水平垂直居中；
+    2）text-align + vertical-align(父元素)；将父元素设置为table-cell元素，子元素设置为inline-block元素
+    3）绝对定位：absolute+margin:auto;     absolute+margin负值;  absolute+translate(-50%,-50%)+left50%+top50%
+    4)flex: display:flex + margin:auto;    justify-content:center + align-items: center;
+    5)gird: display:gird + justify-items:center + align-items: center;
+
+
+底部粘连布局: 
+    1)传统：
+        [对(.sticky)footer 进行绝对定位absolute+bottom:0]  
+        + [父级(.box)进行相对定位+min-height: 100% ]  
+        + [(.content)padding-bottom:50px(footer高度);]
+    2)calc: 
+        [对(.sticky)footer height:50px] 
+        +  [(.content)min-height:calc(100vh - 50px);]
+    2)flex（底部高度不固定，发生变化）更加灵活
+        .box{display:flex;flex-flow:column;min-height:100vh;background-color:lightblue;}
+        .content{flex:1;}
+        .sticky{background-color:lightgreen;height:50px;}
+
+
+两端对其：
+    1）flex:space-between;
+    2) text-align:text-align: justify + text-align-last: justify; 
+        在元素之间添加空白符(包括空格、换行符、制表符)才起作用
+    3)text-align+ 伪元素: justify; + :after{content:"";width:100%;display:inline-block;}
+
+
+两列布局： (float、inline-block、absolute、flex和grid)
+    1)float:float+ margin;
+      float+margin+calc():
+        .parent{overflow: hidden;zoom: 1;}
+        .left{float: left;width: 100px;margin-right: 20px;}    
+        .right{float: left;width: calc(100% - 120px);}
+     float + overflow: overflow属性来触发bfc,兼容ie6  zoom:1
+        .parent{overflow: hidden;zoom: 1;}
+        .left{ float: left;width: 100px;margin-right: 20px;}    
+        .right{overflow: hidden;zoom: 1;}
+    
+    2)inline-block:inline-block + margin + calc
+    3)absolute:
+        .parent{position: relative;width:100%;height:40px;}
+        .left{position: absolute;left:0;width:100px;}
+        .right{position: absolute;left:120px;right:0;}
+    4)flex:
+        .parent{display: flex;}
+        .left{width:100px;margin-right: 20px;}
+        .right{flex:1;}
+
+
+
+
+三列布局：
+    1)float + margin + calc
+        .parent{overflow: hidden;}
+        .left,.right{position: relative;float: left;width: 100px;}
+        .centerWrap{float: left; width:100%; margin: 0 -100px;}
+        .center{margin: 0 120px;}
+    2)inline-block + margin + calc
+        .parent{font-size: 0;}
+        .left,.right,.center{display:inline-block; vertical-align: top;font-size: 16px;}
+        .left,.right{width: 100px;}
+        .center{width: calc(100% - 240px); margin: 0 20px;}
+    3)absilute或者flex
+        .parent{display: flex;}
+        .left,.right{width: 100px;}
+        .center{flex: 1; margin: 0 20px;}
+
+
+
+
+等分布局：
+    1)float + padding + background-clip (见上) background-clip使子元素padding部分不显示背景
+    2）float + margin + calc
+    3）inline-block + padding + background-clip
+    4）flex:
+        .parent{display: flex;}
+        .child{
+            flex:1;
+            height: 100px;
+        }
+        .child + .child{
+            margin-left: 20px;
+        }
+
+
+等高布局：
+    1）flex: flex中的伸缩项目默认都拉伸为父元素的高度，也实现了等高效果
+    2)absolute: 设置子元素的top:0;bottom:0;使得所有子元素的高度都和父元素的高度相同
+    3)负margin
+
+
+全屏布局： https://www.xiaohuochai.cc/posts/5af82ef0d749173d1452b80f
+   见上
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+</script>
+</html>

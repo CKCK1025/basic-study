@@ -124,7 +124,7 @@ BFC布局与普通文档流布局区别    https://www.xiaohuochai.cc/posts/5af7
         1）浮动的元素会被父级计算高度(父级元素触发了BFC)
         2）非浮动元素不会覆盖浮动元素的位置(非浮动元素触发了BFC)
         3）margin不会传递给父级(父级触发BFC)
-        4）属于同一个BFC的两个相邻元素上下margin会重叠（一个bfc下，一个在bfc外，连个margin不重叠）
+        4）属于同一个BFC的两个相邻元素上下margin会重叠（一个bfc下，一个在bfc外，两个margin不重叠）
            开发中的应用：
         1）阻止margin重叠
         2）可以包含浮动元素 —— 清除内部浮动(清除浮动的原理是两个 div都位于同一个 BFC 区域之中)

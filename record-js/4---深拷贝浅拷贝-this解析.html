@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>base</title>
+</head>
+<style lang="text/css">
+</style>
+<body>
+</body>
+<script>
+/*===========================================================================
+1.浅拷贝深拷贝
+*/
+// 浅拷贝
+function clone(object){
+    let x = {};
+    for (const k of object) {
+        x[k] = object[k];
+    }
+    return x;
+}
+
+//深拷贝1
+function clone(target) {
+    if (typeof target === 'object') {
+        let cloneTarget = {};
+        for (const key in target) {
+            cloneTarget[key] = clone(target[key]);
+        }
+        return cloneTarget;
+    } else {
+        return target;
+    }
+};
+
+//深拷贝2  考虑数组
+module.exports = function clone(target) {
+    if (typeof target === 'object') {
+        let cloneTarget = Array.isArray(target) ? [] : {};
+        for (const key in target) {
+            cloneTarget[key] = clone(target[key]);
+        }
+        return cloneTarget;
+    } else {
+        return target;
+    }
+};
+
+// 需要考虑正则，Set,Map,数组，对象，循环引用，函数，Symbol类型
+function clone(target, map = new WeakMap()) {
+
+    // 克隆原始类型
+    if (!isObject(target)) {
+        return target;
+    }
+
+    // 初始化
+    const type = getType(target);
+    let cloneTarget;
+    if (deepTag.includes(type)) {
+        cloneTarget = getInit(target, type);
+    }
+
+    // 防止循环引用
+    if (map.get(target)) {
+        return map.get(target);
+    }
+    map.set(target, cloneTarget);
+
+    // 克隆set
+    if (type === setTag) {
+        target.forEach(value => {
+            cloneTarget.add(clone(value,map));
+        });
+        return cloneTarget;
+    }
+
+    // 克隆map
+    if (type === mapTag) {
+        target.forEach((value, key) => {
+            cloneTarget.set(key, clone(value,map));
+        });
+        return cloneTarget;
+    }
+
+    // 克隆对象和数组
+    const keys = type === arrayTag ? undefined : Object.keys(target);
+    forEach(keys || target, (value, key) => {
+        if (keys) {
+            key = value;
+        }
+        cloneTarget[key] = clone(target[key], map);
+    });
+
+    return cloneTarget;
+}
+
+
+//jquery 提供一个$.extend可以用来做深拷贝
+
+//数库lodash，也有提供_.cloneDeep用来做深拷贝
+
+
+
+
+
+/*===========================================================================
+2.this全面解析：
+    this的值是在执行的时候才能确认，定义的时候不能确认，
+    this是执行上下文环境的一部分，而执行上下文需要在代码执行之前确定
+
+判断函数中this指向步骤：
+    1）判断函数类型：
+        箭头函数：包裹箭头函数的第一个普通函数中的this
+        bind,call,apply：this是第一个参数
+        普通函数：看函数如何被调用2）
+    2)new 的方式调用，this就是该实例。不是new的方式，看是obj.fn()还是fn();
+    3)fn()则this指向window;     obj.fn()，则this是指向obj;
+
+*/
+
+</script>
+</html>

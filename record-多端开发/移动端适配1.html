@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" 布局视口宽度,     页面初始缩放比率,       缩放的最大值,      缩放的最小值,       user-scalable如果设置为 no，用户将不能放大或缩小网页。默认值为 yes -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>base</title>
+</head>
+<style lang="text/css">
+.border_1px:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 1px;
+    width: 100%;
+    background-color: #000;
+    transform-origin: 50% 0%;
+}
+@media only screen and (-webkit-min-device-pixel-ratio:2){
+    .border_1px:before{
+        transform: scaleY(0.5);
+    }
+}
+@media only screen and (-webkit-min-device-pixel-ratio:3){
+    .border_1px:before{
+        transform: scaleY(0.33);
+    }
+}
+</style>
+<body>
+    <div class="border_1px"></div>
+</body>
+<script>
+/*
+总结一：
+1.英寸： 物理尺寸，对角线
+2.分辨率：
+    1）像素：像素可以作为图片或电子屏幕的最小组成单位。
+    2）屏幕分辨率：屏幕分辨率指一个屏幕具体由多少个像素点组成。
+    3）图像分辨率：是指图片含有的像素数
+    4）PPI:每英寸包括的像素数。
+    5)DPI:即每英寸包括的点数。
+3.设备独立像素
+    1）用一种单位来同时告诉不同分辨率的手机，它们在界面上显示元素的大小是多少 DIP
+    2)设备像素比dpr：
+4.获取浏览器大小：
+window.innerHeight：获取浏览器视觉视口高度（包括垂直滚动条）。
+window.outerHeight：获取浏览器窗口外部的高度。表示整个浏览器窗口的高度，包括侧边栏、窗口镶边和调
+                    正窗口大小的边框。
+window.screen.Height：获取获屏幕取理想视口高度，这个数值是固定的，设备的分辨率/设备像素比
+window.screen.availHeight：浏览器窗口可用的高度。
+document.documentElement.clientHeight：获取浏览器布局视口高度，包括内边距，但不包括垂直滚动条、
+                                        边框和外边距。
+document.documentElement.offsetHeight：包括内边距、滚动条、边框和外边距。
+document.documentElement.scrollHeight：在不使用滚动条的情况下适合视口中的所有内容所需的最小宽度。
+                测量方式与clientHeight相同：它包含元素的内边距，但不包括边框，外边距或垂直滚动条。
+
+
+
+
+总结二：
+1.  1px问题：  伪类 + transform  （见上）
+
+2.  设置viewport
+const scale = 1 / window.devicePixelRatio;
+const viewport = document.querySelector('meta[name="viewport"]');
+if (!viewport) {
+    viewport = document.createElement('meta');
+    viewport.setAttribute('name', 'viewport');
+    window.document.head.appendChild(viewport);
+}
+viewport.setAttribute('content', 'width=device-width,user-scalable=no,initial-scale=' + scale + ',maximum-scale=' + scale + ',minimum-scale=' + scale);
+
+3.移动端适配方案:
+    1)flexible方案：统一使用rem布局，
+        function setRemUnit () {
+            var rem = docEl.clientWidth / 10
+            docEl.style.fontSize = rem + 'px'
+        }
+        setRemUnit();
+    
+    2）vh,vw方案：视觉视口的宽高100等分，innerWidth,innerHeight;
+    3) 利用calc()函数
+
+4，设配iphoneX
+    1)安全区域就是一个不受(圆角，刘海，黑条)三个效果的可视窗口范围
+    2)viewport-fit: cover可视窗口完全包含网页内容, contain网页内容完全覆盖可视窗口
+    3)env,constant(先配置<meta name="viewport" content="viewport-fit=cover">);   
+        {
+            padding-bottom: constant(safe-area-inset-bottom);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+5横屏适配
+    1)window.orientation:获取屏幕旋转方向
+        window.addEventListener("resize", ()=>{
+            if (window.orientation === 180 || window.orientation === 0) { 
+            // 正常方向或屏幕旋转180度
+                console.log('竖屏');
+            };
+            if (window.orientation === 90 || window.orientation === -90 ){ 
+            // 屏幕顺时钟旋转90度或屏幕逆时针旋转90度
+                console.log('横屏');
+            }  
+        }); 
+    2)css横屏检测
+        @media screen and (orientation: portrait) {
+            竖屏...
+        } 
+        @media screen and (orientation: landscape) {
+            横屏...
+        }
+
+
+6.图片模糊问题
+    1）使用media查询判断不同的设备像素比来显示不同精度的图片
+    2）image-set，以及img属性srcset
+        .avatar {
+            background-image: -webkit-image-set( "conardLi_1x.png" 1x, "conardLi_2x.png" 2x );
+        }
+        <img src="conardLi_1x.png" srcset=" conardLi_2x.png 2x, conardLi_3x.png 3x">
+
+
+
+
+
+
+*/
+
+</script>
+</html>

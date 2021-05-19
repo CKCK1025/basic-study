@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>有效括号</title>
+    <div>
+        给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+        有效字符串需满足：
+        左括号必须用相同类型的右括号闭合。
+        左括号必须以正确的顺序闭合。
+    </div>
+</head>
+<style lang="text/css">
+</style>
+<body>
+</body>
+<script>
+/*
+思路：
+利用栈先入后出特点，
+遍历目标字符串，
+遇到左括号入栈，遇到后括号，判断栈顶左括号是否匹配，匹配则出栈，不匹配则返回false;
+遍历完目标字符串，判断栈内是否还有元素，还有则返回false;
+都符合，最后返回true;
+
+*/
+
+
+var isValid = function(s) {
+    let strObj= {
+        '(': -1 ,
+        '{': -2,
+        '[': -3,
+        ')': 1,
+        '}': 2,
+        ']': 3,
+    };
+    let stack = [];
+    for(let i = 0;i <s.length;i += 1) {
+        if(strObj[s[i]] < 0) {
+            stack.push(s[i]);
+        }else{
+            let last = stack.pop();
+            if(strObj[last] + strObj[s[i]] != 0) {
+                return false;
+            }
+        }
+    }
+    if(stack.length > 0) return false;
+    return true;
+};
+
+//哈希Map表
+
+</script>
+</html>

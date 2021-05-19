@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>汉明距离</title>
+</head>
+<style lang="text/css">
+</style>
+<body>
+    两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。
+
+    给出两个整数 x 和 y，计算它们之间的汉明距离。
+    
+    注意：
+    0 ≤ x, y < 231.
+    
+    示例:
+    
+    输入: x = 1, y = 4
+    
+    输出: 2
+    
+    解释:
+    1   (0 0 0 1)
+    4   (0 1 0 0)
+            ↑   ↑
+    
+    上面的箭头指出了对应二进制位不同的位置。
+        
+</body>
+<script>
+//转成二进制，字符串长度填充，比较
+
+
+
+var hammingDistance = function(x, y) {
+    let codex = Number(x).toString(2);
+    let codey = Number(y).toString(2);
+    let num =0;
+    let minStr = '';
+    let maxStr = '';
+    let pre = '';
+    if(x > y){
+        minStr = codey;
+        maxStr = codex;
+        for(let i = 0;i < maxStr.length - minStr.length;i += 1) {
+            pre = '0'.concat(pre);
+        }
+        minStr = pre.concat(minStr);
+    }else {
+        minStr = codex;
+        maxStr = codey;
+        
+        for(let i = 0;i < maxStr.length - minStr.length;i += 1) {
+            pre = '0'.concat(pre);
+        }
+        minStr = pre.concat(minStr);
+    }
+    for(let i = minStr.length -1;i >= 0;i -= 1) {
+        if(minStr[i] != maxStr[i]) {
+            num += 1;
+        }
+    }
+    return num;
+}
+console.log(hammingDistance(1501377268,258791155));
+</script>
+</html>

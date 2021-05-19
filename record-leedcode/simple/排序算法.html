@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>排序算法</title>
+</head>
+<style lang="text/css">
+</style>
+<body>
+</body>
+<script>
+let arr = [1,2,5,6,3,5,3,99,77,-2,-5,-5,-3,0,1,2,5,6,3,5,3,99,77,-2,-5,-5,-3,0];
+//冒泡
+let handleMaoPaoSort = function(arr){
+    for(let i = 0;i <arr.length - 1;i += 1) {
+        for(let k = i + 1;k <arr.length;k += 1) {
+            if(arr[i] >= arr[k]){
+                let t = arr[i];
+                arr[i] = arr[k];
+                arr[k] = t;
+            }
+        }
+    }
+}
+// handleMaoPaoSort(arr)
+//插入排序
+let handleChaRuSort = function(arr){
+    console.time('插入排序耗时:');
+    for(let i = 0;i <arr.length;i += 1) {
+        for(let k = i;k > 0;k = k - 1) {
+            if(arr[k-1] >= arr[k]){
+                let t = arr[k-1];
+                arr[k-1] = arr[k];
+                arr[k] = t;
+            }
+        }
+    }
+    console.timeEnd('插入排序耗时:');
+}
+
+//希尔排序
+// function shellSort(arr) {
+    // var len = arr.length,
+    //     temp,
+    //     gap = 1;
+    // console.time('希尔排序耗时:');
+    // while(gap < len/5) {          //动态定义间隔序列
+    //     gap =gap*5+1;
+    // }i
+    // for (gap; gap > 0; gap = Math.floor(gap/5)) {
+    //     for (var i = gap; i < len; i++) {
+    //         temp = arr[i];
+    //         for (var j = i-gap; j >= 0 && arr[j] > temp; j-=gap) {
+    //             arr[j+gap] = arr[j];
+    //         }
+    //         arr[j+gap] = temp;
+    //     }
+    // }
+    // console.timeEnd('希尔排序耗时:');
+    // return arr;
+// shellSort(arr)
+
+//希尔排序
+//[1,2,5,6,3,5,3,99,77,-2,-5,-5,-3,0];
+
+let fn = function(arr){
+    console.time('希尔排序耗时:');
+    for(let gap = arr.length/2 ;gap > 0;gap = Math.floor(gap/2)) {
+        for(let i = gap;i <arr.length;i += 1) {
+            let tmp = arr[i];
+            let k = i
+            for(; k >= gap && arr[k-gap] > arr[k]; k = k - gap) {
+                arr[k] = arr[k - gap] 
+            }
+            arr[k] = tmp
+            // console.log(arr);
+        }
+    }
+    console.timeEnd('希尔排序耗时:');
+}
+
+//归并排序 分治法
+
+let mergeArray = function(arr, first, mid, last, temp){
+    let i = first; 
+    let m = mid;
+    let j = mid+1;
+    let n = last;
+    let k = 0;
+    while(i<=m && j<=n) {
+        if(arr[i] < arr[j]) {
+        temp[k++] = arr[i++];
+        } else {
+        temp[k++] = arr[j++];
+        }
+    }
+    while(i<=m) {
+        temp[k++] = arr[i++];
+    }
+    while(j<=n) {
+        temp[k++] = arr[j++];
+    } 
+    for(let l=0; l<k; l++) {
+        arr[first+l] = temp[l];
+    }
+    return arr;
+}
+let handleGB = function(arr, first, last, temp) {
+    if(first<last) {
+        console.log(first, last );
+        let mid = Math.floor((first + last) / 2);
+        // handleGB(arr, first, mid, temp);
+        handleGB(arr, mid, last, temp);
+        arr = mergeArray(arr, first, mid, last, temp);  
+    }
+    return arr;
+}
+
+
+
+
+let temp = [];
+// handleGB(arr)
+console.log(handleGB(arr, 0, (arr.length - 1), temp));
+
+</script>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>base</title>
+</head>
+<style lang="text/css">
+</style>
+<body>
+    给定一个二叉树，检查它是否是镜像对称的。
+    例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
+    
+        1
+       / \
+      2   2
+     / \ / \
+    3  4 4  3
+     
+    但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:
+    
+        1
+       / \
+      2   2
+       \   \
+        3    3
+     
+    
+    进阶：
+    
+    你可以运用递归和迭代两种方法解决这个问题吗？
+
+</body>
+<script>
+var isSymmetric = function(root) {
+    let index = 1;
+    let ceng = 1;
+    return calc = function(index, ceng, root){
+        if(index == 1 && (!root.length || !root[0])) return false;
+        let cengNum = Math.pow(2, index*2-1);
+        for(let i = 0;i <index*2;i += 1) {
+            let nums = index*2 + index;
+            if(root.length > index*2 + index){
+                if(root[])
+            }else{
+                return false;
+            }
+        }
+        index = index + index*2;
+        ceng = ceng + 1;
+        return calc(index, ceng, root)
+    };
+};
+</script>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>base</title>
+</head>
+<style lang="text/css">
+</style>
+<body>
+</body>
+<script>
+
+
+let obj = {
+    name: 'aa',
+    p:{
+        name: 'aa',
+        a: () => {
+            console.log(this.name)
+        },
+        b: function() {
+            console.log(this.name)
+        }
+    }
+}
+
+    obj.p.a();
+    obj.p.b();
+
+    const bar = obj.p.a;
+    const foo = obj.p.b;
+
+    bar();
+    foo();
+
+
+    // undefined aa undefined undefined
+
+
+
+    console.log('a');
+
+    setTimeout(() => {
+        console.log('timeout 1')
+    }, 0)
+
+    setTimeout(() => {
+        console.log('timeout 2')
+        Promise.resolve().then(() =>{
+            console.log('timeout 2 promise')
+            Promise.resolve().then(() => console.log('timeout 4 promise'))
+        } )
+        // setTimeout(() => {
+        //     console.log('timeout 4')
+        //     Promise.resolve().then(() => console.log('timeout 4 promise'))
+        // }, 0)
+    }, 0)
+
+    console.log('b')
+
+    new Promise((resolve, reject) => {
+        console.log('promise 1')
+        resolve()
+        console.log('promise 2')
+    })
+    .then(() => {
+        console.log('promise 3')
+        setTimeout(() => console.log('promise 3 timeout'), 0)
+    })
+    .then(() => {
+        console.log('promise 5')
+    })
+
+    console.log('c')
+
+    /*
+        a  b
+        promise 1
+        promise 2
+        c
+        promise 3
+        promise 5
+        timeout 2
+        timeout 1
+        timeout 2 promise
+        promise 3 timeout
+    */
+
+
+    var a = 'aa';
+
+    function foo() {
+        console.log(a)
+        let a = 'bb';
+    }
+
+    foo();
+
+
+    /*
+    undefined
+    
+    */
+
+
+
+    let x = 5;
+    function fn(x){
+        return function(y){
+            console.log(y + (++x));
+        }
+    }
+    let f = fn(6);
+    f(7);
+    fn(8)(9);
+    f(10);
+    console.log(x);
+
+
+
+
+    let a=0;
+    let b=0;
+    function A(a){
+        A = function(b){
+            console.log(a + b++)
+        }
+        console.log(a++)
+    }
+    A(1)
+    A(2)
+
+
+
+
+
+</script>
+</html>

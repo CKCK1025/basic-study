@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>base</title>
+</head>
+<style lang="text/css">
+</style>
+<body>
+</body>
+<script>
+function Node(data, next){
+    this.data = data;
+    this.next = next;
+}
+
+function NodeList(node){
+    this.length = 0;
+    this.next = node;
+}
+// 创建链表（头插法）
+
+function CreateListHead(num){
+        var list = new NodeList(null);
+        for(var i=0; i<num; i++){
+            var node = new Node(Math.round(Math.random()* 100),null);
+            console.info(node);
+            node.next = list.next;
+            list.next = node;
+            list.length++;
+        }
+        return list;
+    }
+// 创建链表（尾插法）
+function CreateListTail(num){
+        var list = new NodeList(null);
+        var p = list;
+        for(var i=0; i<num; i++){
+            var node = new Node(Math.round(Math.random()* 100),null);
+            console.info(node)
+            p.next = node;
+            p = node;
+            list.length++;
+        }
+        return list
+    }
+
+let list = CreateListHead(15);
+console.log(list);
+
+</script>
+</html>

@@ -16,6 +16,13 @@
 <body>
 </body>
 <script>
+    
+/*
+1，利用map,哈希隐射
+2，以key=数组值，value=数组下标方式存入map
+3,遍历nums,数组下标为当前下标，每个值都判断map中是否存在 target-nums[i] 的 key 值，
+如果存在则获取到结果
+*/
 var twoSum1 = function(nums, target) {
     let map = new Map();
     for(let i=0; i< nums.length; i+=1){
@@ -79,12 +86,5 @@ var twoSum3 = function(nums, target) {
 };
 
 
-/*
-1，利用map,哈希隐射
-2，以key=数组值，value=数组下标方式存入map
-3,遍历nums,数组下标为当前下标，每个值都判断map中是否存在 target-nums[i] 的 key 值，如果存在则获取到结果
-
-
-*/
 </script>
 </html>

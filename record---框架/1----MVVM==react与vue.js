@@ -9,3 +9,9 @@
 
 
 */
+
+
+
+function fxss() {
+    console.log(ni)
+}

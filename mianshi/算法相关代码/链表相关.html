@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>链表---链表反转</title>
+</head>
+<style lang="text/css">
+
+</style>
+
+<body>
+</body>
+<script>
+    function LinkedList() {
+        var Node = function(val) {　　　　　　 //新元素构造
+            this.val = val;
+            this.next = null;
+        };
+        var length = 0;
+        var head = null;
+
+        this.append = function(val) {
+            var node = new Node(val);　　　　 //构造新的元素节点
+            var current;
+            if (head === null) {　　　　　　　　 //头节点为空时  当前结点作为头节点
+                head = node;
+            } else {
+                current = head;　　　　　　　　　　　　　　
+                while (current.next) {　　　　　 //遍历，直到节点的next为null时停止循环，当前节点为尾节点
+                    current = current.next;
+                }
+                current.next = node;　　　　　　 //将尾节点指向新的元素，新元素作为尾节点
+            }
+            length++;　　　　　　　　　　　　　　 //更新链表长度
+        };
+        this.removeAt = function(position) {
+            if (position > -1 && position < length) {
+                var current = head;
+                var index = 0;
+                var previous;
+                if (position == 0) {
+                    head = current.next;
+                } else {
+                    while (index++ < position) {
+                        previous = current;
+                        current = current.next;
+                    }
+                    previous.next = current.next;
+                }
+                length--;
+                return current.val;
+            } else {
+                return null;
+            }
+        };
+        this.insert = function(position, val) {
+            if (position > -1 && position <= length) {　　　 //校验边界
+                var node = new Node(val);　　　　　　　　
+                current = head;
+                var index = 0;
+                var previous;
+                if (position == 0) {　　　　　　 //作为头节点，将新节点的next指向原有的头节点。
+                    node.next = current;
+                    head = node;　　　　　　　　　 //新节点赋值给头节点
+                } else {
+                    while (index++ < position) {
+                        previous = current;
+                        current = current.next;
+                    }　　　　　　　　　　　　　　　 //遍历结束得到当前position所在的current节点，和上一个节点
+                    previous.next = node;　　　　 //上一个节点的next指向新节点  新节点指向当前结点，可以参照上图来看
+                    node.next = current;
+                }
+                length++;
+                return true;
+            } else {
+                return false;
+            }
+        };
+        this.toString = function() {
+            var string = head.val;
+            var current = head.next;
+            while (current) {
+                string += ',' + current.val;
+                current = current.next;
+            }
+            return string;
+        };
+        this.indexOf = function(val) {
+            var current = head;
+            var index = -1;
+            while (current) {
+                if (val === current.val) { //从头节点开始遍历
+                    return index;
+                }
+                index++;
+                current = current.next;
+            }
+            return -1;
+        };
+        this.getLength = function() {
+            return length;
+        }
+        this.getHead = function() {
+            return head;
+        }
+    }
+
+    function fn(head) { //链表反转，重要就是交换哪一步，需要找个变量暂存交换值
+        let pre = null;
+        let next = null;
+        while (head.next != null) {
+            next = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return hre;
+    }
+
+
+    function fn2(head) { //两两反转
+        let f = head;
+        let b = f.next;
+        f.next = fn2(b.next);
+        b.next = f;
+        return b;
+    }
+
+    function hasCycle() { //判断是否有环
+        //1  硬做，  2  set存储利用   3， 快慢指针，相遇    4，
+        let a = head;
+        let b = head;
+        while (a && b && b.next) {
+            a = a.next;
+            b = b.next.next;
+            if (a == b) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+
+    var hasCycle2 = function(head) { //利用set集合
+        let set = new Set();
+        let a = head;
+        while (a) {
+            set.add(a);
+            if (set.has(a.next)) {
+                return true;
+            }
+            a = a.next;
+        }
+        return false;
+    };
+</script>
+
+</html>

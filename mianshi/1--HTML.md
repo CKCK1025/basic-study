@@ -42,7 +42,7 @@ title： 鼠标移入显示，alt，图片资源加载不出来显示（图片�
 
 7. script中defer和async的区别
 script:立即 加载，执行。
-script + defer: 并行加载，在元素解析完DOMContentLoaded前 执行。
+script + defer: 并行加载，在元素解析完DOMContentLoaded执行。
 script + aysnc: 并行加载并立即执行。
 async 和 defer 网络读取都是异步，区别在于加载完是否立即执行。
 
@@ -58,10 +58,11 @@ focus和blur无事件冒泡，mouseover,mouseout位置定位消耗性能高，�
 
 9. cookie和localStorage、sessionStorage、indexDB 的区别
 cookie: 4kb, http请求的请求头带cookie。可设置过期时间，主要用在判断是否登录。
-        http-only限制客户端通过js访问cookie；secure:只能在协议为https请求中携带；
+        http-only限制客户端通过js访问cookie；
+        secure:只能在协议为https请求中携带；
         same-site:浏览器不能在跨域请求携带，减少cerf攻击
-localStorage: 5m，一直存在，除非手动清楚缓存，不参与服务端通信；
-localStorage：5m，本网页存在，关闭网页失效，也可手动清楚缓存，不参与服务端通信；
+localStorage: 5m，一直存在，除非手动清除缓存，不参与服务端通信；
+localStorage：5m，本网页存在，关闭网页失效，也可手动清除缓存，不参与服务端通信；
 indexDB：noSQL数据库，内存大，除非清理否则存在。
 
 
